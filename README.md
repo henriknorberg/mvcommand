@@ -10,7 +10,5 @@ Commands are great! They are small, reusable and perfect for async operations. Y
 
 Example
 =======
-Coming soon...
-
-In production, not ready to be used!
+Coming soon...under heavy refactoring!
 -----------
