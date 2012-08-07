@@ -11,4 +11,3 @@ Commands are great! They are small, reusable and perfect for async operations. Y
 Example
 =======
 Coming soon...under heavy refactoring!
------------
