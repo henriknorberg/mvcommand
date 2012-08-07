@@ -1,6 +1,6 @@
 MVCommand
 =========
-A Minimal agnostic MVCCommand micro-architecture. No databindings. No templates. No routers. Just wiring and commands.
+A Minimal agnostic MVC micro-architecture. No databindings. No templates. No routers. Just wiring and commands.
 
 ![Flowdiagram](http://henriknorberg.net/images/MVCC.png)
 
