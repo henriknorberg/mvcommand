@@ -1,7 +1,7 @@
 {
   "author": "Henrik A. Norberg <norberg@gmail.com>",
-  "name": "MVCC",
-  "description": "A Minimal agnostic MVCCommand micro-architecture. No databindings. No templates. No routers. Just wiring",
+  "name": "mvcommands",
+  "description": "A Minimal agnostic MVCCommand micro-architecture for node.js and the browser. No databindings. No templates. No routers. Just wiring",
   "version": "0.0.0",
   "repository": {
     "url": ""
@@ -18,9 +18,6 @@
   ],
   "dependencies": {
     "mediator": "*",
-    "domready": "*",
-    "connect": "*",
-    "browserling": "*"
     },
   "devDependencies": {},
   "optionalDependencies": {}

@@ -18,8 +18,10 @@ Mvc.prototype.Context = function (p){
 	this.parent = p || undefined;
 
 	// automaticly set up mediators
+	this.contextMediator = new Mediator();
 	this.modelMediator = new Mediator();
 	this.viewMediator = new Mediator();
+
 	//this.commandMediator = new Mediator();
 
 	//this.eventBus = new Mediator();
@@ -29,22 +31,36 @@ Mvc.prototype.Context = function (p){
 	};
 };
 
+Mvc.prototype.Context.prototype.addContext = function (cntx){
+	var context = new Context(n);
+
+	this.contextMediator.add(context,"onContextUpdate");
+
+	return context;
+}
+
 Mvc.prototype.Context.prototype.addModel = function (n){
 	var model = new Model(n);
 
-	this.modelMediator.add(model,"onModelUpdate");
+	this.modelMediator.add(model,"onUpdate");
+
 
 	return model;
 };
 
 Mvc.prototype.Context.prototype.addView = function (n){
+
 	var view = new View(n);
 
-	//console.log(this.viewMediator)
+
+	view.render = function(e){} // Must be overridden
+
+	//Subscribe view to model
+	this.modelMediator.add(view,"onUpdate", view.render);
 
 	//adding views events
-	//this.modelMediator.add(view,"onModelUpdate", view.onModelUpdate);
 	this.viewMediator.add(view,"onRender");
+	this.viewMediator.add(view,"onClosed");
 
 	return view;
 };
@@ -113,7 +129,8 @@ Mvc.prototype.CommandMap = function (){
 
 
 //should write new Mediator
-CommandMediator = new Mediator();
+// Should be singleton?
+//CommandMediator = new Mediator();
 
 
 module.exports = function(){
