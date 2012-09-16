@@ -4,7 +4,7 @@ var Mediator = require('mediator'),
 
 Mvc = function(){
 	var self = this;
-	this.className = "MVC";
+	this.className = "::MVC::";
 	
 };
 
@@ -13,7 +13,7 @@ Mvc.prototype.toString = function (){
 };
 
 Mvc.prototype.Context = function (p){
-	//className = "CONTEXT";
+	//A simple facade wrapper and container
 	var self = this;
 	this.parent = p || undefined;
 
@@ -31,13 +31,26 @@ Mvc.prototype.Context = function (p){
 	};
 };
 
+/*
 Mvc.prototype.Context.prototype.addContext = function (cntx){
-	var context = new Context(n);
+	var context = new Mvc.Context(this);
 
 	this.contextMediator.add(context,"onContextUpdate");
 
 	return context;
 }
+*/
+
+Mvc.prototype.Context.prototype.addContext = function (){
+	console.log(this);
+	var model = new this.Context(this);
+
+	this.modelMediator.add(model,"onUpdate");
+
+	return model;
+};
+
+
 
 Mvc.prototype.Context.prototype.addModel = function (n){
 	var model = new Model(n);
@@ -50,34 +63,44 @@ Mvc.prototype.Context.prototype.addModel = function (n){
 
 Mvc.prototype.Context.prototype.addView = function (n){
 
+//WATCH OUT FOR GARBAGE COLLECTION OF OLD VALUES
+//-> check to see if view all ready exists
+
+
+
 	var view = new View(n);
 
+	view.context = this;
 
-	view.render = function(e){} // Must be overridden
+	// Should be overridden
+	view.render = function(e){};
 
 	//Subscribe view to model
-	this.modelMediator.add(view,"onUpdate", view.render);
+	this.modelMediator.add(view,"onUpdate", "render");
 
 	//adding views events
 	this.viewMediator.add(view,"onRender");
-	this.viewMediator.add(view,"onClosed");
+
 
 	return view;
 };
 
 
-View = function (n){
+var View = function (n){
 	this.name = n;
 	that = this;
+
+	//Add destroy func for garbage collection
+
+	this.destroy = function(){
+		//console.log("Crash and BURN" + this.context);
+		this.context.modelMediator.removeFromAll(this);
+		this.context.viewMediator.removeFromAll(this);
+	}
 };
 
-/*
-View.prototype.onModelUpdate = function(){
-	//console.log("ModelUpdated");
-};
-*/
 
-Model = function (){
+var Model = function (){
 	that = this;
 };
 
@@ -87,8 +110,6 @@ Mvc.prototype.Context.prototype.mapCommand = function (cmd,event,tp){
 
 	//adding views events
 	try{
-		//Fix this
-		//this[type].add(cmd, event, cmd); //one to set data
 		this[type].add(cmd, event, cmd); //this one broadcast
 
 	} catch (err) {
@@ -97,6 +118,8 @@ Mvc.prototype.Context.prototype.mapCommand = function (cmd,event,tp){
 };
 
 
+/*
+// Unnescacery
 Mvc.prototype.Command = function (){
 
 	this.execute = function(){
@@ -104,10 +127,10 @@ Mvc.prototype.Command = function (){
 	};
 
 	this.toString = function(){
-		return "::COMMAND::"; //Does not work Why!?
+		return "::COMMAND::";
 	};
 };
-
+*/
 
 Mvc.prototype.CommandMap = function (){
 

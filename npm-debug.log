@@ -1,0 +1,60 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/n/versions/0.8.6/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'nide',
+1 verbose cli   '-g' ]
+2 info using npm@1.1.32
+3 info using node@v0.8.6
+4 verbose config file /home/myoko/.npmrc
+5 verbose config file /usr/local/n/versions/0.8.6/etc/npmrc
+6 verbose config file /usr/local/lib/node_modules/npm/npmrc
+7 verbose read json /usr/local/n/versions/0.8.6/lib/package.json
+8 verbose read json /usr/local/n/versions/0.8.6/lib/package.json
+9 verbose cache add [ 'nide', null ]
+10 silly cache add name=undefined spec="nide" args=["nide",null]
+11 verbose parsed url { pathname: 'nide', path: 'nide', href: 'nide' }
+12 verbose addNamed [ 'nide', '' ]
+13 verbose addNamed [ null, '' ]
+14 silly addNameRange { name: 'nide', range: '', hasData: false }
+15 verbose url raw nide
+16 verbose url resolving [ 'https://registry.npmjs.org/', './nide' ]
+17 verbose url resolved https://registry.npmjs.org/nide
+18 verbose etag "4AM4JCCH000KNF4TW0P9C9ZJA"
+19 http GET https://registry.npmjs.org/nide
+20 http 200 https://registry.npmjs.org/nide
+21 silly registry.get cb [ 200,
+21 silly registry.get   { vary: 'Accept',
+21 silly registry.get     server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+21 silly registry.get     etag: '"C73EWDBBICOGSTXVIZRDPL0AQ"',
+21 silly registry.get     date: 'Thu, 06 Sep 2012 01:12:37 GMT',
+21 silly registry.get     'content-type': 'application/json',
+21 silly registry.get     'content-length': '11795' } ]
+22 silly addNameRange number 2 { name: 'nide', range: '', hasData: true }
+23 silly addNameRange versions [ 'nide', [] ]
+24 error Error: No compatible version found: nide
+24 error No valid targets found.
+24 error Perhaps not compatible with your version of node?
+24 error     at installTargetsError (/usr/local/lib/node_modules/npm/lib/cache.js:506:10)
+24 error     at next_ (/usr/local/lib/node_modules/npm/lib/cache.js:452:17)
+24 error     at next (/usr/local/lib/node_modules/npm/lib/cache.js:427:44)
+24 error     at /usr/local/lib/node_modules/npm/lib/cache.js:419:5
+24 error     at saved (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/get.js:136:7)
+24 error     at /usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:230:7
+24 error     at Object.oncomplete (fs.js:297:15)
+24 error  [Error: No compatible version found: nide
+24 error No valid targets found.
+24 error Perhaps not compatible with your version of node?]
+25 error You may report this log at:
+25 error     <http://github.com/isaacs/npm/issues>
+25 error or email it to:
+25 error     <npm-@googlegroups.com>
+26 error System Linux 3.2.0-30-generic-pae
+27 error command "/usr/local/n/versions/0.8.6/bin/node" "/usr/local/bin/npm" "install" "nide" "-g"
+28 error cwd /media/docs/fatcap/projecter/jstests/nodetests/playground/mvcommand
+29 error node -v v0.8.6
+30 error npm -v 1.1.32
+31 error message No compatible version found: nide
+31 error message No valid targets found.
+31 error message Perhaps not compatible with your version of node?
+32 verbose exit [ 1, true ]
