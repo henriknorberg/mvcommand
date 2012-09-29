@@ -4,7 +4,7 @@ var Mediator = require('mediator'),
 
 Mvc = function(){
 	var self = this;
-	this.className = "::MVC::";
+	this.className = "::MVCommand::";
 	
 };
 
@@ -22,8 +22,6 @@ Mvc.prototype.Context = function (p){
 	this.modelMediator = new Mediator();
 	this.viewMediator = new Mediator();
 
-	//this.commandMediator = new Mediator();
-
 	//this.eventBus = new Mediator();
 
 	this.toString = function(){
@@ -31,15 +29,6 @@ Mvc.prototype.Context = function (p){
 	};
 };
 
-/*
-Mvc.prototype.Context.prototype.addContext = function (cntx){
-	var context = new Mvc.Context(this);
-
-	this.contextMediator.add(context,"onContextUpdate");
-
-	return context;
-}
-*/
 
 Mvc.prototype.Context.prototype.addContext = function (){
 	console.log(this);
@@ -50,14 +39,15 @@ Mvc.prototype.Context.prototype.addContext = function (){
 	return model;
 };
 
-
-
 Mvc.prototype.Context.prototype.addModel = function (n){
-	var model = new Model(n);
-
+	var model;
+	if (n instanceof Mvc.prototype.Model){
+		model = n;
+	} else {
+		model = new Mvc.prototype.Model;
+	}
+	
 	this.modelMediator.add(model,"onUpdate");
-
-
 	return model;
 };
 
@@ -66,9 +56,7 @@ Mvc.prototype.Context.prototype.addView = function (n){
 //WATCH OUT FOR GARBAGE COLLECTION OF OLD VALUES
 //-> check to see if view all ready exists
 
-
-
-	var view = new View(n);
+	var view = new Mvc.prototype.View(n);
 
 	view.context = this;
 
@@ -86,7 +74,7 @@ Mvc.prototype.Context.prototype.addView = function (n){
 };
 
 
-var View = function (n){
+Mvc.prototype.View = function (n){
 	this.name = n;
 	that = this;
 
@@ -96,12 +84,17 @@ var View = function (n){
 		//console.log("Crash and BURN" + this.context);
 		this.context.modelMediator.removeFromAll(this);
 		this.context.viewMediator.removeFromAll(this);
+
+		//delete this;
 	}
 };
 
 
-var Model = function (){
+//Just a mock model for now
+Mvc.prototype.Model = function (d){
+
 	that = this;
+	this.data = d;
 };
 
 

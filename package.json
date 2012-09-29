@@ -3,8 +3,9 @@
   "name": "mvcommands",
   "description": "A Minimal agnostic MVCCommand micro-architecture for node.js and the browser. No databindings. No templates. No routers. Just wiring",
   "version": "0.0.0",
+  "main" : "index.js",
   "repository": {
-    "url": ""
+    "url": "https://github.com/henriknorberg/mvcommand"
   },
   "engines": {
     "node": "~0.6.8"
@@ -17,8 +18,14 @@
     "micro-architecture"
   ],
   "dependencies": {
-    "mediator": "*",
+    "mediator": "*"
     },
-  "devDependencies": {},
+  "scripts" : {
+      "test" : "node node_modules/tap/bin/tap.js test/*.js"
+  },
+  , "devDependencies": {
+        "tap" : "~0.2.5"
+  }
   "optionalDependencies": {}
 }
+  
