@@ -2,40 +2,45 @@ var assert = require('assert'),
        Mvc = require('../index'),
        mvc =  new Mvc();
 
-//a simple guard
-var noMsgGuard = function(e){
-	if (!e.msg) throw new TypeError('Options must an object!');
+
+
+/////////////////////
+//	Add a few commands
+/////////////////////
+
+// a simple guard to avoid conditionals and for reuse
+var mustBeObjectGuard = function(e){
+	if (!e.msg) throw new TypeError('Options must an object!')// use in instead!
 	return e;
 }
 
-//Add a few commands
+//simple object command
 var commandHello = {};
 commandHello.execute = function (e){
-  e = noMsgGuard(e);
-  console.log("Hello, " + e.msg);
+  this.e = mustBeObjectGuard(e);
+  console.log("Hello, " + this.e.msg);
   return "Hello";
 }
+
 assert.equal(typeof commandHello.execute, "function");
 
+//simple function command
 var commandYo = function (){};
 commandYo.execute = function (e){
    if (e) console.log("Yo, " + e.msg);
-  return "Yo";
+   return "Yo";
 }
 
 assert.equal(typeof commandYo.execute, "function");
 
-/*
 
-//Command Map
+
+//Add to Command Map for global commands
 var commandMapTest = new mvc.CommandMap();
-
 commandMapTest.map("commandHello",commandHello);
 
-assert.equal(commandMapTest.getMap("commandHello").execute(), "Hello");
-assert.equal(commandMapTest.getMap("commandHello"), "::COMMAND::");
-
-*/
+assert.equal(commandMapTest.get("commandHello").execute({msg:"Halla"}), "Hello");
+// THIS SHOULD FAIL  // assert.equal(commandMapTest.get("commandHello"), "::COMMAND::");
 
 
 //////////////////
@@ -59,6 +64,7 @@ pageModel.update = function(data){
 
 //Subscribe commands to pageContext model
 pageContext.modelMediator.add(commandHello,"onUpdate",commandHello.execute);
+
 
 //////////////////
 //Add a view
@@ -97,7 +103,7 @@ pageView.close = function(){
 pageContext.viewMediator.add(commandHello,"onRender","execute");
 pageContext.viewMediator.add(commandYo,"onClosed","execute");
 
-//or maybe like this:
+//or maybe synbtactic sugar like this in the future:
 //pageView.bind(resizeCommand).to("onResize").guardWith(isDesktop);
 
 
@@ -161,29 +167,6 @@ headerContext.viewMediator.add(commandHello,"onRender",commandHello.execute);
 //var footerContext = pageContext.addContext();
 
 
-
-
-/**/
-
-
-//////////////////
-//Shorthand version
-//////////////////
-
-/*
-var shortContext = new mvc.Context();
-
-var shortContext = new mvc.Context().addModel().addView().guardWith().;
-
-pageView.bind(resizeCommand).to("onResize").guardWith(isDesktop);
-pageModel.bind(updateCommand).to("onUpdate").guardWith(nameIsUpdated);
-
-//Example Guard
-//http://javascriptweblog.wordpress.com/2010/07/19/a-javascript-function-guard/
-
-
-*/
-
 ////////////////////////////////////
 //Kick it: Update model.data
 ////////////////////////////////////
@@ -195,3 +178,20 @@ pageModel.update({name:"henrik"});
 
 
 
+///////////////////////////////////////////////////
+// Future Shorthand versions and syntactic sugar //
+//////////////////////////////////////////////////
+
+/*
+var shortContext = new mvc.Context().addModel(m).addView(v).guardWith(g);
+
+pageView.bind(resizeCommand).to("onResize").guardWith(isDesktop);
+pageModel.bind(updateCommand).to("onUpdate").guardWith(nameIsUpdated);
+
+//simple stream
+pageModel().pipe(pageView)
+
+//stream with guards and modiufiers
+pageModel().pipe(isString).pipe(makeUpperCase).pipe(pageView);
+
+*/

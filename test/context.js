@@ -1,4 +1,4 @@
-var Mvcommand = require("../index"),
+  var Mvcommand = require("../index"),
           mvc =  new Mvcommand(),
      Mediator = require("../node_modules/mediator"),
        assert = require("assert"),
